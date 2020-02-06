@@ -1,16 +1,21 @@
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.css'
 import { getMovies, getMovie } from "./getMovies";
-
+import {Pagination} from "../Common/pagintaion";
 
 export default class Movies extends React.Component {
     state = {
-        movies: getMovie()
+        movies: getMovie(),
+        pageSize: 4
     }
 
     handleDelete = (movie) => {
         const movies = this.state.movies.filter(m => m._id !== movie._id)
         this.setState({ movies: movies })
+    }
+
+    handlePageChange = (page) => {
+        console.log(page)
     }
 
     render() {
@@ -44,6 +49,11 @@ export default class Movies extends React.Component {
                         ))}
                         </tbody>
                     </table>
+                    <Pagination
+                        itemCounts={count}
+                        pageSize={this.state.pageSize}
+                        onPageChange={this.handlePageChange()}
+                    />
                 </div>
             </React.Fragment>
         )
